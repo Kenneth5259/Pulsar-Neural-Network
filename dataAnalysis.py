@@ -30,6 +30,20 @@ def test_Accuracy(cm):
         is_lowest = True
     return("False Negative Percentage: " + "{0:.2f}".format(perc_false_neg) + ", False Positive Percentage: " + "{0:.2f}".format(perc_false_positive))
 
+def find_highest_accuracy():
+    for filename in os.listdir('./Models'):
+        if filename.endswith('.h5'):
+            classifier = load_model('./Models/' + filename)
+            Y_pred = classifier.predict(X_test)
+            Y_pred = (Y_pred > 0.5)
+            cm = confusion_matrix(Y_test, Y_pred)
+            print(test_Accuracy(cm))
+            if(is_lowest):
+                highest_name = './Models/' + filename
+                is_lowest = False
+            continue
+        else:
+            continue
 #Data Loading
 dataset = pd.read_csv('./HTRU2/HTRU_2.csv')
 
@@ -45,18 +59,6 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-for filename in os.listdir('./Models'):
-    if filename.endswith('.h5'):
-        classifier = load_model('./Models/' + filename)
-        Y_pred = classifier.predict(X_test)
-        Y_pred = (Y_pred > 0.5)
-        cm = confusion_matrix(Y_test, Y_pred)
-        print(test_Accuracy(cm))
-        if(is_lowest):
-            highest_name = './Models/' + filename
-            is_lowest = False
-        continue
-    else:
-        continue
+find_highest_accuracy()
 
 print('The Model with the least false negatives is ' + highest_name)
