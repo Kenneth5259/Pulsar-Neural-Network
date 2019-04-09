@@ -39,8 +39,12 @@ def model_rename():
             Y_pred = (Y_pred > 0.5)
             cm = confusion_matrix(Y_test, Y_pred)
             model_info = test_Accuracy(cm) # returns array [0] = accuracy, [1] = false pos, [2] = false neg
-            os.rename(filename, filename[:-3])
-            os.rename(filename, filename + str(model_info[0]) + str(model_info[1]) + str(model_info[2]) + '.h5')
+            new_name = filename[:-3]
+            os.rename(filename, new_name)
+            print(current_name)
+            print(filename)
+
+            #os.rename(filename, filename + str(model_info[0]) + str(model_info[1]) + str(model_info[2]) + '.h5')
         else:
             continue
     
