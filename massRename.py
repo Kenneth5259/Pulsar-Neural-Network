@@ -39,7 +39,7 @@ def model_rename():
             Y_pred = (Y_pred > 0.5)
             cm = confusion_matrix(Y_test, Y_pred)
             model_info = test_Accuracy(cm) # returns array [0] = accuracy, [1] = false pos, [2] = false neg
-            filename = (os.getcwd() + filename)
+            filename = (os.getcwd() + "/Models/" + filename)
             new_name = filename[:-3] + "_" + model_info[0] + "_" + model_info[1] + "_" + model_info[2] + '.h5'
             print("Old File: " + filename)
             print("New File: " + new_name)
