@@ -2,9 +2,10 @@ import os
 import re
 
 path = os.getcwd() + '/Models/'
-count = 0
+
 
 def filter_by_accuracy():
+    count = 0
     for filename in os.listdir('./Models'):
             if filename.endswith('.h5'):
                 x = re.findall("\d+\.\d+", filename)
