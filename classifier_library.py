@@ -6,13 +6,15 @@ from keras.models import Sequential
 from keras.layers import Dense
 import pandas as pd
 import os
+import random
 
 lowest_false_neg=0
 lowest_name = ''
 is_lowest = False
+activation_functions = ['relu', 'sigmoid', 'hard_sigmoid', 'selu', 'softplus', 'softsign']
+# added to add a delimiter between each activation function
 
- # added to add a delimiter between each activation function
-
+#function to test accuracy of each model's confusion matrix
 def test_Accuracy(cm):
     global lowest_false_neg
     global is_lowest
@@ -30,11 +32,10 @@ def test_Accuracy(cm):
     if(perc_false_neg < lowest_false_neg and perc_false_neg > 0):
         lowest_false_neg =  perc_passed
         is_lowest = True
-    print("False Negative Percentage: " + "{0:.2f}".format(perc_false_neg) + ", False Positive Percentage: " + "{0:.2f}".format(perc_false_positive))
     return ["{0:.2f}".format(perc_passed), "{0:.2f}".format(perc_false_positive), "{0:.2f}".format(perc_false_neg)]
 
 
-
+#function to rename model with accuracy standard
 def model_rename():
     for filename in os.listdir('./Models'):
         if filename.endswith('.h5'):
@@ -51,7 +52,37 @@ def model_rename():
             os.rename(filename, new_name)
         else:
             continue
-    
+
+#returns randomized layer count
+def getLayerCount():
+    return random.randint(1,11) #generates a number between 1 and 10
+
+#returns randomized activation function
+def getActivationFunction():
+    return activation_functions[random.randint(0,5)]
+
+#function to create and save classifier models when the number of units per layer is passed   
+def createClassifier(units):
+    from keras.models import Sequential
+    from keras.layers import Dense
+    layers = getLayerCount()
+    filePath = './Models/' + str(layers) + '-Layer'
+    classifier = Sequential()
+
+    classifier.add(Dense(units=units, kernel_initializer='uniform', activation='relu', input_dim=8))
+    for i in range (0, layers):
+        activationType = getActivationFunction()
+        filePath += ('-' + activationType)
+        classifier.add(Dense(units=units, kernel_initializer='uniform', activation=activationType))
+    classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
+    classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    classifier.fit(X_train, Y_train, batch_size=10, epochs=100)
+    filePath += '.h5'
+    classifier.save(filePath)
+
+
+
+
 
 #Data Loading
 dataset = pd.read_csv('./HTRU2/HTRU_2.csv')
