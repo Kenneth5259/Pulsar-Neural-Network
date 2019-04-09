@@ -29,7 +29,7 @@ def test_Accuracy(cm):
         lowest_false_neg =  perc_passed
         is_lowest = True
     print("False Negative Percentage: " + "{0:.2f}".format(perc_false_neg) + ", False Positive Percentage: " + "{0:.2f}".format(perc_false_positive))
-    return {perc_passed, perc_false_positive, perc_false_neg}
+    return [perc_passed, perc_false_positive, perc_false_neg]
 
 def model_rename():
     for filename in os.listdir('./Models'):
@@ -65,5 +65,4 @@ X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
 model_rename()
-
-print('The Model with the least false negatives is ' + highest_name)
+print("Rename Complete")
