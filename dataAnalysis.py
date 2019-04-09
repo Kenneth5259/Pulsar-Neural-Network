@@ -31,6 +31,7 @@ def test_Accuracy(cm):
     return("False Negative Percentage: " + "{0:.2f}".format(perc_false_neg) + ", False Positive Percentage: " + "{0:.2f}".format(perc_false_positive))
 
 def find_highest_accuracy():
+    global is_lowest
     for filename in os.listdir('./Models'):
         if filename.endswith('.h5'):
             classifier = load_model('./Models/' + filename)
