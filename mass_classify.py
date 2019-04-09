@@ -57,5 +57,5 @@ X_test = sc.transform(X_test)
 
 
 for i in range(1, 101):
-    classifier = createClassifier(5)
+    createClassifier(5)
     
