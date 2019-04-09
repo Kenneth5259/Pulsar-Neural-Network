@@ -60,6 +60,6 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-highest_name = find_highest_accuracy()
+model_rename()
 
 print('The Model with the least false negatives is ' + highest_name)
