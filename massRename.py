@@ -11,6 +11,8 @@ lowest_false_neg=0
 lowest_name = ''
 is_lowest = False
 
+ # added to add a delimiter between each activation function
+
 def test_Accuracy(cm):
     global lowest_false_neg
     global is_lowest
@@ -31,6 +33,8 @@ def test_Accuracy(cm):
     print("False Negative Percentage: " + "{0:.2f}".format(perc_false_neg) + ", False Positive Percentage: " + "{0:.2f}".format(perc_false_positive))
     return ["{0:.2f}".format(perc_passed), "{0:.2f}".format(perc_false_positive), "{0:.2f}".format(perc_false_neg)]
 
+
+
 def model_rename():
     for filename in os.listdir('./Models'):
         if filename.endswith('.h5'):
@@ -40,7 +44,7 @@ def model_rename():
             cm = confusion_matrix(Y_test, Y_pred)
             model_info = test_Accuracy(cm) # returns array [0] = accuracy, [1] = false pos, [2] = false neg
             filename = (os.getcwd() + "/Models/" + filename)
-            new_name = filename[:-3] + "_" + model_info[0] + "_" + model_info[1] + "_" + model_info[2] + '.h5'
+            new_name = filename[:-3] + "-" + model_info[0] + "-" + model_info[1] + "-" + model_info[2] + '.h5'
             print("Old File: " + filename)
             print("New File: " + new_name)
 
