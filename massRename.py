@@ -48,7 +48,7 @@ def model_rename():
             print("Old File: " + filename)
             print("New File: " + new_name)
 
-            #os.rename(filename, filename + str(model_info[0]) + str(model_info[1]) + str(model_info[2]) + '.h5')
+            os.rename(filename, new_name)
         else:
             continue
     
