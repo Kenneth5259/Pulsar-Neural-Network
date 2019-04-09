@@ -29,7 +29,7 @@ def test_Accuracy(cm):
         lowest_false_neg =  perc_passed
         is_lowest = True
     print("False Negative Percentage: " + "{0:.2f}".format(perc_false_neg) + ", False Positive Percentage: " + "{0:.2f}".format(perc_false_positive))
-    return [perc_passed, perc_false_positive, perc_false_neg]
+    return ["{0:.2f}".format(perc_passed), "{0:.2f}".format(perc_false_positive), "{0:.2f}".format(perc_false_neg)]
 
 def model_rename():
     for filename in os.listdir('./Models'):
@@ -40,7 +40,7 @@ def model_rename():
             cm = confusion_matrix(Y_test, Y_pred)
             model_info = test_Accuracy(cm) # returns array [0] = accuracy, [1] = false pos, [2] = false neg
             filename = (os.getcwd() + filename)
-            new_name = filename[:-3] + str(model_info[0]) + str(model_info[1]) + str(model_info[2]) + '.h5'
+            new_name = filename[:-3] + "_" + model_info[0] + "_" + model_info[1] + "_" + model_info[2] + '.h5'
             print("Old File: " + filename)
             print("New File: " + new_name)
 
