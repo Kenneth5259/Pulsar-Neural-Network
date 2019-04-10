@@ -13,6 +13,7 @@ lowest_false_neg=0
 lowest_name = ''
 is_lowest = False
 activation_functions = ['relu', 'sigmoid', 'hard_sigmoid', 'selu', 'softplus', 'softsign']
+path = os.getcwd() + '/Models/'
 # added to add a delimiter between each activation function
 
 #function to test accuracy of each model's confusion matrix
@@ -82,8 +83,21 @@ def createClassifier(units):
     classifier.save(filePath)
 
 
-
-
+def filter_by_accuracy():
+    count = 0
+    for filename in os.listdir('./Models'):
+            if filename.endswith('.h5'):
+                x = re.findall("\d+\.\d+", filename)
+                accuracy = float(x[0])
+                fp = float(x[1])
+                fn = float(x[2])
+                if(accuracy > 98.1 and fn > 0):
+                    print(filename)
+                    count += 1
+                    os.rename(path + filename, path + 'Performance/' + filename)
+                else:
+                    os.rename(path + filename, path + 'Suboptimal/' + filename)
+    print("There are " + str(count) + " models that meet minimum accuracy")
 
 #Data Loading
 dataset = pd.read_csv('./HTRU2/HTRU_2.csv')
@@ -99,6 +113,3 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, rando
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
-
-model_rename()
-print("Rename Complete")
