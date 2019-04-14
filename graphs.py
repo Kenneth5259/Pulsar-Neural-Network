@@ -67,10 +67,10 @@ def layers_vs_runtime():
                     layers.append(float(filename[:1]))
                     rt.append(cl.runtime('./Models/Suboptimal/' + filename))
     plt.scatter(layers, rt, np.pi*3, (0,0,0), alpha=0.5)
-    plt.title('Model Accuracy vs Layers')
+    plt.title('Runtime vs Layers')
     plt.xlabel('#' + ' Layers')
     plt.ylabel('%' + ' Runtimes')
     plt.show()
-    #plt.savefig('Accuracy vs Layers.png')
+    plt.savefig('Accuracy vs Layers.png')
     
 layers_vs_runtime()
