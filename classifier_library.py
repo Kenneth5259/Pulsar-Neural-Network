@@ -8,6 +8,7 @@ import pandas as pd
 import os
 import random
 import re
+import time
 
 lowest_false_neg=0
 lowest_name = ''
@@ -56,6 +57,12 @@ def model_rename():
             continue
 
 #returns randomized layer count
+def runtime(filename):
+    classifier = load_model(filename)
+    start =  time.time()
+    prediction = classifier.predict(X_test)
+    end = time.time()
+    return (end - start)
 def getLayerCount():
     return random.randint(1,11) #generates a number between 1 and 10
 
