@@ -69,8 +69,31 @@ def layers_vs_runtime():
     plt.scatter(layers, rt, np.pi*3, (0,0,0), alpha=0.5)
     plt.title('Runtime vs Layers')
     plt.xlabel('#' + ' Layers')
-    plt.ylabel('%' + ' Runtimes')
-    plt.show()
+    plt.ylabel( 'Runtimes (s)')
     plt.savefig('Accuracy vs Layers.png')
     
+def accuracy_vs_runtime():
+    rt = []
+    accuracy = []
+    for filename in os.listdir('./Models/Performance'):
+            if filename.endswith('.h5'):
+                x = re.findall("\d+\.\d+", filename)
+                accuracy.append(float(x[0]))
+                rt.append(cl.runtime('./Models/Performance/' + filename))
+
+    for filename in os.listdir('./Models/Suboptimal'):
+            if filename.endswith('.h5'):
+                x = re.findall("\d+\.\d+", filename)
+                if(float(x[0]) > 95):
+                    accuracy.append(float(x[0]))
+                    rt.append(cl.runtime('./Models/Suboptimal/' + filename))
+    
+    plt.scatter(rt, accuracy, np.pi*3, (0,0,0), alpha=0.5)
+    plt.title('Runtime vs Accuracy')
+    plt.xlabel('Runtime (s)')
+    plt.ylabel('% Accuracy')
+    plt.savefig('Runtime vs Accuracy.png')
+    #plt.show()
+
+accuracy_vs_runtime()
 layers_vs_runtime()
